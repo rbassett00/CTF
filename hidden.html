@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF Project</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="text">OMG you found the <a href="key.txt" download>decoder</a>!</div>
+        <details>
+            <summary>Hint</summary>
+            <p>Google how to decrypt with a .txt key</p>
+          </details>
+          <div class="flag-checker">
+            <input type="text" id="flagInput" placeholder="Enter your flag here" />
+            <button onclick="checkFlag()">Submit Flag</button>
+            <div id="result"></div>
+          </div>
+        </div>
+    </div>
+   
+    
+</body>
+<script>
+    // Replace with SHA-256 hash of your actual flag (in hex)
+    const correctHash = "7e9ee4163d2b9cea1e8f4a02ec97260bd68e5dd5ad17862f01b7868b27470ea3"; // example
+
+    async function sha256(text) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+    }
+
+    async function checkFlag() {
+      const userFlag = document.getElementById("flagInput").value.trim();
+      const resultDiv = document.getElementById("result");
+
+      const userHash = await sha256(userFlag);
+
+      if (userHash === correctHash) {
+        resultDiv.textContent = "Correct!";
+        resultDiv.style.color = "greenyellow";
+      } else {
+        resultDiv.textContent = "Sorry! Not the right flag";
+        resultDiv.style.color = "red";
+      }
+    }
+  </script>
+</html>

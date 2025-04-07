@@ -1,0 +1,17 @@
+body {
+    background-color: black;
+    color: greenyellow;
+    font-family: "Courier New", Courier, monospace;
+    align-items: center;
+    justify-content: center;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+.treasure {
+    max-width: 60%;
+}
